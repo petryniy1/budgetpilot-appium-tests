@@ -4,6 +4,11 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+### Test run artifacts ###
+screenshots/
+allure-results/
+allure-report/
+
 ### Project notes (not for the cloud) ###
 CLAUDE.md
 
