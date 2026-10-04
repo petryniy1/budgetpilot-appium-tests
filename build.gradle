@@ -1,5 +1,6 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '2.2.20'
+    id 'io.qameta.allure' version '4.3.0'
 }
 
 group = 'org.example'
@@ -10,12 +11,26 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'io.appium:java-client:9.4.0'
+    testImplementation 'io.appium:java-client:10.1.1'
     testImplementation 'org.seleniumhq.selenium:selenium-java:4.27.0'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
+    testImplementation 'io.qameta.allure:allure-junit5:2.35.5'
 }
 test {
     useJUnitPlatform()
+    doFirst {
+        delete("screenshots")
+    }
+}
+allure {
+    adapter {
+        allureJavaVersion = '2.35.5'
+        frameworks {
+            jupiter {
+                enabled = true
+            }
+        }
+    }
 }
 kotlin {
     jvmToolchain(21)
