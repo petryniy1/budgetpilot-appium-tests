@@ -40,7 +40,7 @@ jobs:
         with:
           name: allure-results
           path: |
-            allure-results/
+            build/allure-results/
             screenshots/
           if-no-files-found: ignore
 
@@ -49,4 +49,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./allure-report
+          publish_dir: ./build/reports/allure-report/allureReport
