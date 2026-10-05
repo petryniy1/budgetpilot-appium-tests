@@ -1,0 +1,28 @@
+name: Appium tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout tests repo
+        uses: actions/checkout@v4
+
+      - name: Checkout BudgetPilot
+        uses: actions/checkout@v4
+        with:
+          repository: petryniy1/BudgetPilot
+          path: BudgetPilot
+
+      - name: Run tests on Android emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          target: google_apis
+          arch: x86_64
+          script: echo "Emulator is up"
