@@ -1,13 +1,13 @@
 package budgetpilot.appium.tests
 
-import budgetpilot.appium.testdata.cashFromGiaWallet
+import budgetpilot.appium.testdata.transferFromGiaWallet
 import budgetpilot.appium.ui.flows.assertNewWalletParameters
 import org.junit.jupiter.api.Test
 
 class CreateAccountTest : BaseAppiumTest() {
     @Test
     fun createAccount_showsCorrectBalanceAndCurrency() {
-        val wallet = cashFromGiaWallet()
+        val wallet = transferFromGiaWallet()
         val expectedBalanceText = "1 350.00 USD"
 
         val accountsScreenAfterSave = accountsScreen.clickAdd()

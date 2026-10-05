@@ -10,8 +10,8 @@ data class WalletInput(
     val currency: AccountCurrency
 )
 
-fun cashFromGiaWallet(currency: AccountCurrency = AccountCurrency.USD) = WalletInput(
-    name = "Cash from Gia",
+fun transferFromGiaWallet(currency: AccountCurrency = AccountCurrency.USD) = WalletInput(
+    name = "Transfer from Gia",
     balanceInput = "1350",
     type = AccountType.BANK_ACCOUNT,
     currency = currency
