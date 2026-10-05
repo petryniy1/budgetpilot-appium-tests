@@ -31,6 +31,7 @@ jobs:
           api-level: 34
           target: google_apis
           arch: x86_64
+          profile: pixel
           script: bash .github/scripts/run-in-emulator.sh
 
       - name: Upload Allure results and screenshots
