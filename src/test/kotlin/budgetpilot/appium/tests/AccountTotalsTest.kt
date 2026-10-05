@@ -34,19 +34,18 @@ class AccountTotalsTest : BaseAppiumTest() {
         step("Assert total for $currency sums both wallets and lists both names") {
             val walletNamesLine = afterSecondWallet
                 .walletNamesLineInTotal(firstWallet.name)
-            assertTrue(
-                walletNamesLine
-                    .contains(firstWallet.name)
-            ) {
-                "Expected the currency-group summary to contain '${firstWallet.name}'," +
-                        " but was: '$walletNamesLine'"
+
+            step("Assert wallet name '${firstWallet.name}' is listed in the total") {
+                assertTrue(walletNamesLine.contains(firstWallet.name)) {
+                    "Expected the currency-group summary to contain '${firstWallet.name}'," +
+                            " but was: '$walletNamesLine'"
+                }
             }
-            assertTrue(
-                walletNamesLine
-                    .contains(secondWallet.name)
-            ) {
-                "Expected the currency-group summary to also contain '${secondWallet.name}'," +
-                        " but was: '$walletNamesLine'"
+            step("Assert wallet name '${secondWallet.name}' is listed in the total") {
+                assertTrue(walletNamesLine.contains(secondWallet.name)) {
+                    "Expected the currency-group summary to also contain '${secondWallet.name}'," +
+                            " but was: '$walletNamesLine'"
+                }
             }
 
             assertEquals(
