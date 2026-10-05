@@ -33,5 +33,6 @@ jobs:
           arch: x86_64
           script: |
             cd BudgetPilot
+            chmod +x gradlew
             ./gradlew assembleDebug
             adb install -r app/build/outputs/apk/debug/app-debug.apk
