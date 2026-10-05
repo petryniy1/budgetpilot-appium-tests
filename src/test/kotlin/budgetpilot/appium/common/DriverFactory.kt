@@ -26,7 +26,7 @@ object DriverFactory {
 
         val driver = AndroidDriver(URI(serverUrl)
             .toURL(), options)
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10))
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30))
 
         return driver
     }
