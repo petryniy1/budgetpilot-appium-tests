@@ -31,4 +31,7 @@ jobs:
           api-level: 34
           target: google_apis
           arch: x86_64
-          script: echo "Emulator is up"
+          script: |
+            cd BudgetPilot
+            ./gradlew assembleDebug
+            adb install -r app/build/outputs/apk/debug/app-debug.apk
