@@ -25,14 +25,27 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
 
-      - name: Run tests on Android emulator
+      - name: Build app, run tests, build Allure report
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 34
           target: google_apis
           arch: x86_64
-          script: >
-            cd BudgetPilot &&
-            chmod +x gradlew &&
-            ./gradlew assembleDebug &&
-            adb install -r app/build/outputs/apk/debug/app-debug.apk
+          script: bash .github/scripts/run-in-emulator.sh
+
+      - name: Upload Allure results and screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: |
+            allure-results/
+            screenshots/
+          if-no-files-found: ignore
+
+      - name: Publish Allure report to GitHub Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./allure-report

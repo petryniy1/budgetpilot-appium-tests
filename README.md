@@ -15,6 +15,13 @@
   <img src="https://img.shields.io/badge/status-actively%20developed-2BBCFF" alt="Actively developed" />
 </p>
 
+<p align="center">
+  <a href="https://github.com/petryniy1/budgetpilot-appium-tests/actions/workflows/appium-tests.yml"><img src="https://github.com/petryniy1/budgetpilot-appium-tests/actions/workflows/appium-tests.yml/badge.svg" alt="CI status" /></a>
+  <a href="https://petryniy1.github.io/budgetpilot-appium-tests/"><img src="https://img.shields.io/badge/Allure%20report-latest%20run-FF6E00?logo=allure&logoColor=white" alt="Latest Allure report" /></a>
+</p>
+
+Every push to `main` builds BudgetPilot, boots an emulator, runs the full suite against it, and publishes the result — no local setup needed to check it: [latest test report](https://petryniy1.github.io/budgetpilot-appium-tests/).
+
 This repository is a black-box UI test framework for [BudgetPilot](https://github.com/petryniy1/BudgetPilot), a personal finance tracker for Android. Tests drive a built APK through Appium exactly as a real user would — no access to BudgetPilot's own source or internals is required or used.
 
 The framework is intentionally a separate Gradle project rather than a module inside BudgetPilot itself. Wiring a pure-JVM test module into an Android application's own build caused a real Kotlin Gradle plugin version conflict (`org.jetbrains.kotlin.jvm` declared with two different versions on the same classpath). Keeping the two independent means BudgetPilot stays buildable on any machine with zero knowledge of this project, and this project can evolve its own dependency versions freely.
@@ -69,6 +76,20 @@ Every Page Object action and read is wrapped in an [Allure](https://allurereport
 ```
 
 builds the report from the latest run and opens it in a browser.
+
+CI builds and publishes the same report after every run on `main` — see the badge above or [the latest report](https://petryniy1.github.io/budgetpilot-appium-tests/) directly, no local run required.
+
+## Continuous integration
+
+[`.github/workflows/appium-tests.yml`](.github/workflows/appium-tests.yml) runs the whole stack on every push/PR to `main`, on a GitHub-hosted runner:
+
+1. Checks out this repo and [BudgetPilot](https://github.com/petryniy1/BudgetPilot) side by side.
+2. Boots a KVM-accelerated Android emulator (API 34).
+3. Builds BudgetPilot's debug APK and installs it on the emulator.
+4. Installs and starts Appium, then runs this repo's test suite against it.
+5. Builds the Allure report regardless of pass/fail, uploads the raw results as a workflow artifact, and publishes the report to GitHub Pages.
+
+The emulator-dependent steps (build, install, Appium, tests, report) all run through [`.github/scripts/run-in-emulator.sh`](.github/scripts/run-in-emulator.sh) as a single script, rather than separate workflow steps — the emulator only exists for the duration of one `android-emulator-runner` step, and each line of that step's own inline `script:` value runs as an independent shell with no state carried between lines, so anything that needs `cd` or background processes to persist has to live in one real script file instead.
 
 ## Getting started
 
